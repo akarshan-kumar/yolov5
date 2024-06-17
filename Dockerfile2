@@ -1,0 +1,23 @@
+FROM python:3.8
+#ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get install -y git pkg-config 
+ADD https://ultralytics.com/assets/Arial.ttf https://ultralytics.com/assets/Arial.Unicode.ttf /root/.config/Ultralytics/
+
+COPY requirements.txt .
+# RUN pip install --no-cache -r requirements.txt 
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+RUN git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8081
+
+RUN git clone https://github.com/ultralytics/yolov5 /usr/src/app
+    
+    
+COPY /trData .
+COPY /best.pt .
+COPY /coco128.yaml .
+
+# CMD ['python' ' import os' \
+#     'os.chdir('/root/darknet')' \
+#     'os.system('./darknet detector test data/obj.data cfg/yolov4-obj.cfg /content/yolov4-obj_best.weights /content/3d1d96393c2eccd6.jpg -thresh 0.5')']
+

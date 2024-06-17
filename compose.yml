@@ -1,0 +1,5 @@
+services:
+    yolov5_c:
+      build: .
+      
+  
